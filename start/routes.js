@@ -25,3 +25,7 @@ Route.post('/customers', 'CustomerController.store')
 Route.get('/customers', 'CustomerController.index')
 
 Route.get('/customer/:id', 'CustomerController.show')
+
+Route.patch('/customer/:id', 'CustomerController.update')
+
+Route.delete('/customer/:id', 'CustomerController.delete')

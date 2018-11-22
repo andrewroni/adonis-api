@@ -34,29 +34,47 @@ class CustomerController {
     }
 }
 
-  async update({ request, response }) {
-    const { name, description, customer } = request.post()
+  async update({ request, response, params: { id } }) {
 
-    customer.name = name
-    customer.description = description
+    const customer = await Customer.find(id)
+    if (customer) {
+      const { name, description } = request.post()
 
-    await customer.save()
+      customer.name = name
+      customer.description = description
 
-    response.status(200).json({
-      message: 'Successfully updated this customer.',
-      data: customer
-    })
+      await customer.save()
+
+      response.status(200).json({
+        message: 'Customer was successfuly updated.',
+        data: customer
+      })
+
+    } else {
+      response.status(404).json({
+        message: 'Customer not found',
+        id
+      })
+    }
   }
 
   async delete({ request, response, params: { id } }) {
-    const customer = request.post().customer
+    const customer = await Customer.find(id)
+    if (customer) {
 
-    await customer.delete()
+      await customer.delete()
 
-    response.status(200).json({
-      message: 'Successfully deleted this customer.',
-      id
-    })
+      response.status(200).json({
+        message: 'Successfully deleted this customer.',
+        id
+      })
+
+    } else {
+      response.status(404).json({
+        message: 'Customer not found',
+        id
+      })
+    }
   }
 }
 
