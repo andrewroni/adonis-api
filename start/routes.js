@@ -20,12 +20,12 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.post('/customers', 'CustomerController.store')
-
 Route.get('/customers', 'CustomerController.index')
 
-Route.get('/customer/:id', 'CustomerController.show')
+Route.get('/customer/:id', 'CustomerController.show').middleware(['findCustomer'])
 
-Route.patch('/customer/:id', 'CustomerController.update')
+Route.post('/customers', 'CustomerController.store')
 
-Route.delete('/customer/:id', 'CustomerController.delete')
+Route.patch('/customer/:id', 'CustomerController.update').middleware(['findCustomer'])
+
+Route.delete('/customer/:id', 'CustomerController.delete').middleware(['findCustomer'])
